@@ -1,4 +1,4 @@
-.PHONY: install test run docker-build docker-run docker-test clean
+.PHONY: install test run docker-build docker-run docker-test clean format lint
 
 IMAGE_NAME := data-engineering-demo
 
@@ -10,6 +10,12 @@ test:
 
 run:
 	python src/main.py
+
+format:
+	python -m black src tests
+
+lint:
+	python -m ruff check src tests
 
 docker-build:
 	docker build -t $(IMAGE_NAME) .
@@ -23,3 +29,4 @@ docker-test:
 clean:
 	rm -rf __pycache__
 	rm -rf .pytest_cache
+	rm -rf .ruff_cache
